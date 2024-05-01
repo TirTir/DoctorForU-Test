@@ -1,6 +1,6 @@
 import { defaultInstance } from "../utils";
 
-export const postHospitalList = async (data) => {
+export const postHospitals = async (data) => {
   try {
     const { res } = await defaultInstance.get("/hospital", data);
 
