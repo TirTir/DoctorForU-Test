@@ -1,17 +1,21 @@
-import { Header, Footer } from "../";
+import { Header } from "../header";
 
-export const Layout = (props) => {
+export function Layout({ children }) {
   return (
-    <div>
+    <div style={{ height: "100%", width: "100%" }}>
       <Header />
       <main
         style={{
-          minHeight: "calc(100vh - 150px)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          overflow: "hidden",
         }}
       >
-        {props.children}
+        {children}
       </main>
-      <Footer />
     </div>
   );
-};
+}

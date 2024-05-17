@@ -7,6 +7,7 @@ export function Router() {
   const router = createBrowserRouter([
     { path: "*", element: <common.NotFound /> },
     { path: "auth/login", element: <auth.Login /> },
+    { path: "auth/join", element: <auth.Join /> },
   ]);
 
   return <RouterProvider router={router} />;
