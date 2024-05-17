@@ -57,9 +57,8 @@ export const LineContainer = styled.div`
 
 export const Line = styled.div`
   width: 200px;
-  height: 1px;
   margin: 5px;
-  border: 1px solid #9a9fab;
+  border: 1px solid #eef0f3;
 `;
 
 export const SocialContainer = styled.div`

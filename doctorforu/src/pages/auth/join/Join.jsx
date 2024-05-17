@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Layout } from "../../../components/common";
+
 import * as S from "./Join.styled";
 
 export function Join() {
@@ -20,7 +22,8 @@ export function Join() {
     setPasswordMatch(form.userPasssword === confirmPassword);
   };
   return (
-    <S.Container>
+    <Layout>
+      <S.Line style={{ width: "100%" }}></S.Line>
       <section aria-label="join-info" className="JoinInfo">
         <h1 style={{ fontSize: "40px" }}>회원가입</h1>
         <S.Box>
@@ -36,33 +39,30 @@ export function Join() {
       <section aria-label="join-form" className="JoinContainer">
         <S.JoinForm>
           <S.InputForm>
-            <S.TextBox>이름</S.TextBox>
+            <S.Label>이름<S.Required>*</S.Required></S.Label>
             <S.InputBox>
-              <input
-                className="Input"
+              <S.Input
                 onChange={(e) => setForm({ ...form, userName: e.target.value })}
                 value={form.userName}
               />
             </S.InputBox>
           </S.InputForm>
           <S.InputForm>
-            <S.TextBox>아이디</S.TextBox>
+            <S.Label>아이디<S.Required>*</S.Required></S.Label>
             <S.InputBox>
-              <input
-                className="Input"
+              <S.Input
                 placeholder="6~12자 영문 소문자와 숫자"
                 onChange={(e) => setForm({ ...form, userId: e.target.value })}
                 value={form.userId}
               />
             </S.InputBox>
 
-            <button className="CheckButton">중복체크</button>
+            <S.CheckButton>중복체크</S.CheckButton>
           </S.InputForm>
           <S.InputForm>
-            <S.TextBox>이메일</S.TextBox>
+            <S.Label>이메일<S.Required>*</S.Required></S.Label>
             <S.InputBox>
-              <input
-                className="Input"
+              <S.Input
                 onChange={(e) =>
                   setForm({ ...form, userEmail: e.target.value })
                 }
@@ -72,8 +72,7 @@ export function Join() {
 
             <div>@</div>
             <S.InputBox>
-              <input
-                className="Input"
+              <S.Input
                 onChange={(e) =>
                   setForm({ ...form, userEmailSite: e.target.value })
                 }
@@ -82,10 +81,9 @@ export function Join() {
             </S.InputBox>
           </S.InputForm>
           <S.InputForm>
-            <S.TextBox>비밀번호</S.TextBox>
+            <S.Label>비밀번호<S.Required>*</S.Required></S.Label>
             <S.InputBox>
-              <input
-                className="Input"
+              <S.Input 
                 type="password"
                 onChange={(e) =>
                   setForm({ ...form, userPasssword: e.target.value })
@@ -95,10 +93,9 @@ export function Join() {
             </S.InputBox>
           </S.InputForm>
           <S.InputForm>
-            <S.TextBox>비밀번호 확인</S.TextBox>
+            <S.Label>비밀번호 확인<S.Required>*</S.Required></S.Label>
             <S.InputBox>
-              <input
-                className="Input"
+              <S.Input
                 type="password"
                 onChange={onConfirmedPassword}
                 value={confirmPassword}
@@ -108,15 +105,15 @@ export function Join() {
         </S.JoinForm>
       </section>
       <S.Button>가입하기</S.Button>
-      <div className="LineContainer">
-        <div className="Line"></div>
-        <div style={{ color: "#9A9FAB" }}>SNS 계정으로 회원가입</div>
-        <div className="Line"></div>
-      </div>
-      <div className="SocialContainer">
+      <S.LineContainer>
+        <S.Line style={{ width: "200px" }}></S.Line>
+        <div style={{ color: "#9A9FAB" }}>SNS 계정으로 로그인</div>
+        <S.Line style={{ width: "200px" }}></S.Line>
+      </S.LineContainer>
+      <S.SocialContainer>
         <div>Google</div>
         <div>Kakao</div>
-      </div>
-    </S.Container>
+      </S.SocialContainer>
+    </Layout>
   );
 }

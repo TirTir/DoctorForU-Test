@@ -11,6 +11,7 @@ export function Login() {
 
   return (
     <Layout>
+      <S.Line style={{ width: "100%" }}></S.Line>
       <S.LoginInfo>
         <h1 style={{ fontSize: "40px" }}>로그인</h1>
         <div style={{ fontSize: "15px", fontWeight: "bold" }}>
@@ -40,9 +41,9 @@ export function Login() {
       </S.LoginContainer>
       <S.Button>로그인</S.Button>
       <S.LineContainer>
-        <S.Line></S.Line>
+        <S.Line style={{ width: "200px" }}></S.Line>
         <div style={{ color: "#9A9FAB" }}>SNS 계정으로 로그인</div>
-        <S.Line></S.Line>
+        <S.Line style={{ width: "200px" }}></S.Line>
       </S.LineContainer>
       <S.SocialContainer>
         <div>Google</div>
