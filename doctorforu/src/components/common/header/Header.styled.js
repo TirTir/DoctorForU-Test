@@ -5,10 +5,11 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  height: 70px;
+  height: 50px;
 `;
 
 const Logo = styled.div`
+  cursor: pointer;
   font-weight: bold;
   font-size: 24px;
 `;
@@ -24,11 +25,12 @@ const Nav = styled.nav`
     list-style: none;
   }
   li {
+    cursor: pointer;
     font-size: 16px;
   }
 `;
 
-const Auth = styled.div`
+const Menu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +46,7 @@ const MenuButton = styled.button`
   width: 30px;
   height: 18px;
   border: none;
-  margin: 8px;
+  margin: 12px;
   background: transparent;
   cursor: pointer;
 
@@ -55,4 +57,4 @@ const MenuButton = styled.button`
   }
 `;
 
-export { Container, Logo, Nav, Auth, MenuButton };
+export { Container, Logo, Nav, Menu, MenuButton };
