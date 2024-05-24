@@ -1,26 +1,24 @@
 import { defaultInstance } from "../utils";
 
-export const getConfirmId = async (data) => {
+export const postVerificationCode = async (data) => {
   try {
-    const { res } = await defaultInstance.post("/auth/confirm", data);
-
+    const { res } = await defaultInstance.post("/verify-email", data);
     console.log(res.data); //데이터 출력
     return res;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getEmailVerify = async (data) => {
+export const postVerification = async (data) => {
   try {
-    const { res } = await defaultInstance.post("/auth/verify", data);
-
+    const { res } = await defaultInstance.post("/verification-code", data);
     console.log(res.data); //데이터 출력
     return res;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const postJoin = async (data) => {
   try {

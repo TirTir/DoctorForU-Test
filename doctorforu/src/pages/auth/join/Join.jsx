@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Layout } from "../../../components/common";
 import { Google, Kakao } from "../../../components/auth";
+import { postVerificationCode, postVerification } from "../../../api";
 import * as S from "./Join.styled";
 
 export function Join() {
@@ -59,6 +60,14 @@ export function Join() {
   const onConfirmedPassword = (e) => {
     setVerify.password(e.target.value);
     setConfirm.password(form.userPasssword === verify.password);
+  };
+
+  const handleEmailVerification = async () => {
+    alert("인증 요청되었습니다.");
+    const data = {
+      email: form.userEmail,
+    };
+    const res = await postVerificationCode(data);
   };
 
   const onConfirmEmail = (e) => {
@@ -157,7 +166,9 @@ export function Join() {
                 value={form.userEmail.split("@")[1] || ""}
               />
             </S.InputBox>
-            <S.CheckButton onClick={onConfirmEmail}>인증요청</S.CheckButton>
+            <S.CheckButton onClick={handleEmailVerification}>
+              인증요청
+            </S.CheckButton>
           </S.InputForm>
           <S.InputForm>
             <S.Label>
