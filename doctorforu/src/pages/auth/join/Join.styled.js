@@ -6,13 +6,26 @@ const sharedContainerStyles = css`
   align-items: center;
 `;
 
-export const Box = styled.div`
+export const JoinInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 80%;
+`;
+
+export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 1430px;
   height: 100px;
+  padding: 0 0 0 30px;
+  font-size: 15px;
   background-color: #e8f0f5;
+`;
+
+export const JoinContainer = styled.div`
+display: flex;
+  width: 80%;
 `;
 
 export const JoinForm = styled.div`
@@ -22,20 +35,11 @@ export const JoinForm = styled.div`
   margin: 100px 0 0 0;
 `;
 
-export const Label = styled.label`
-  margin-bottom: 5px;
-  font-weight: bold;
-`;
-
-export const Required = styled.span`
-  margin-left: 5px;
-  color: red;
-`;
-
 export const InputForm = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px;
+  padding: 10px;
+  border-top: 1px solid #aaaaaa;
 `;
 
 export const InputBox = styled.div`
@@ -43,7 +47,7 @@ export const InputBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
+  width: 28%;
   height: 50px;
   margin-left: 50px;
   border: 1px solid #aaaaaa;
@@ -52,10 +56,18 @@ export const InputBox = styled.div`
 export const Input = styled.input`
   border: none;
   outline: none;
-  font-weight: bold;
   font-size: 15px;
-  opacity: 0.55;
   margin: 10px;
+`;
+export const Label = styled.label`
+  width: 10%;
+  margin-bottom: 5px;
+  font-weight: bold;
+`;
+
+export const Required = styled.span`
+  margin-left: 5px;
+  color: red;
 `;
 
 export const CheckButton = styled.button`
@@ -86,6 +98,7 @@ export const LineContainer = styled.div`
 
 export const Line = styled.div`
   border: 1px solid #eef0f3;
+  width: 100%
 `;
 
 export const SocialContainer = styled.div`

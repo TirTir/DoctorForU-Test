@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layout } from "../../../components/common";
-
+import { Google, Kakao } from "../../../components/auth";
 import * as S from "./Join.styled";
 
 export function Join() {
@@ -8,38 +8,91 @@ export function Join() {
     userName: "",
     userId: "",
     userEmail: "",
-    userEmailSite: "",
     userPasssword: "",
+    userPhoneNumber: "",
   });
 
-  const [confirmId, setConfirmId] = useState(false); //아이디 중복 체크
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(false); //비밀번호 확인
+  const [confirm, setConfirm] = useState({
+    id: false, //아이디 중복 체크
+    password: false, //비밀번호 확인
+    email: false, //이메일 확인
+  });
+
+  const [verify, setVerify] = useState({
+    email: "", //이메일 인증코드
+    password: "", //비밀번호 확인
+  });
+
+  const handlePhoneNumberChange = (e, part) => {
+    let phoneNumber = form.userPhoneNumber.split("-");
+    phoneNumber[part] = e.target.value;
+    setForm({
+      ...form,
+      userPhoneNumber: phoneNumber.join("-"),
+    });
+  };
+
+  const handleEmailChange = (e, part) => {
+    let emailParts = form.userEmail.split("@");
+    if (part === 0) {
+      emailParts[0] = e.target.value;
+    } else {
+      emailParts[1] = e.target.value;
+    }
+    setForm({
+      ...form,
+      userEmail: emailParts.join("@"),
+    });
+  };
+
+  const onConfirmedId = (e) => {
+    //아이디 중복 체크(api)
+    if (true) {
+      setConfirm.id(true);
+      alert("사용 가능한 아이디입니다.");
+    } else {
+      setConfirm.id(false);
+      alert("사용중인 아이디입니다.");
+    }
+  };
 
   const onConfirmedPassword = (e) => {
-    const confirm = e.target.value;
-    setConfirmPassword(confirm);
-    setPasswordMatch(form.userPasssword === confirmPassword);
+    setVerify.password(e.target.value);
+    setConfirm.password(form.userPasssword === verify.password);
   };
+
+  const onConfirmEmail = (e) => {
+    //이메일 확인
+    if (true) {
+      setConfirm.email(true);
+      alert("이메일이 확인되었습니다.");
+    } else {
+      setConfirm.email(false);
+      alert("이메일을 다시 확인해주세요.");
+    }
+  };
+
+  const onSubmit = () => {};
+
   return (
     <Layout>
-      <S.Line style={{ width: "100%" }}></S.Line>
-      <section aria-label="join-info" className="JoinInfo">
+      <S.Line></S.Line>
+      <S.JoinInfo>
         <h1 style={{ fontSize: "40px" }}>회원가입</h1>
-        <S.Box>
-          <div style={{ fontSize: "15px" }}>
-            - 아래의 정보들은 이용자 동의없이 공개되지 않습니다.
-          </div>
-          <div style={{ fontSize: "15px", color: "#4288DD" }}>
+        <S.InfoContainer>
+          <div>- 아래의 정보들은 이용자 동의없이 공개되지 않습니다.</div>
+          <div style={{ color: "#4288DD" }}>
             - 이메일 등 입력된 개인정보가 부정확할 시 서비스 이용에 어려움을
             겪으실 수 있습니다.
           </div>
-        </S.Box>
-      </section>
-      <section aria-label="join-form" className="JoinContainer">
+        </S.InfoContainer>
+      </S.JoinInfo>
+      <S.JoinContainer>
         <S.JoinForm>
           <S.InputForm>
-            <S.Label>이름<S.Required>*</S.Required></S.Label>
+            <S.Label>
+              이름<S.Required>*</S.Required>
+            </S.Label>
             <S.InputBox>
               <S.Input
                 onChange={(e) => setForm({ ...form, userName: e.target.value })}
@@ -48,42 +101,24 @@ export function Join() {
             </S.InputBox>
           </S.InputForm>
           <S.InputForm>
-            <S.Label>아이디<S.Required>*</S.Required></S.Label>
-            <S.InputBox>
+            <S.Label>
+              아이디<S.Required>*</S.Required>
+            </S.Label>
+            <S.InputBox style={{ width: "20%" }}>
               <S.Input
                 placeholder="6~12자 영문 소문자와 숫자"
                 onChange={(e) => setForm({ ...form, userId: e.target.value })}
                 value={form.userId}
               />
             </S.InputBox>
-
-            <S.CheckButton>중복체크</S.CheckButton>
+            <S.CheckButton onClick={onConfirmedId}>중복체크</S.CheckButton>
           </S.InputForm>
           <S.InputForm>
-            <S.Label>이메일<S.Required>*</S.Required></S.Label>
+            <S.Label>
+              비밀번호<S.Required>*</S.Required>
+            </S.Label>
             <S.InputBox>
               <S.Input
-                onChange={(e) =>
-                  setForm({ ...form, userEmail: e.target.value })
-                }
-                value={form.userEmail}
-              />
-            </S.InputBox>
-
-            <div>@</div>
-            <S.InputBox>
-              <S.Input
-                onChange={(e) =>
-                  setForm({ ...form, userEmailSite: e.target.value })
-                }
-                value={form.userEmailSite}
-              />
-            </S.InputBox>
-          </S.InputForm>
-          <S.InputForm>
-            <S.Label>비밀번호<S.Required>*</S.Required></S.Label>
-            <S.InputBox>
-              <S.Input 
                 type="password"
                 onChange={(e) =>
                   setForm({ ...form, userPasssword: e.target.value })
@@ -93,17 +128,80 @@ export function Join() {
             </S.InputBox>
           </S.InputForm>
           <S.InputForm>
-            <S.Label>비밀번호 확인<S.Required>*</S.Required></S.Label>
+            <S.Label>
+              비밀번호 확인<S.Required>*</S.Required>
+            </S.Label>
             <S.InputBox>
               <S.Input
                 type="password"
                 onChange={onConfirmedPassword}
-                value={confirmPassword}
+                value={verify.password}
+              />
+            </S.InputBox>
+          </S.InputForm>
+          <S.InputForm>
+            <S.Label>
+              이메일<S.Required>*</S.Required>
+            </S.Label>
+            <S.InputBox style={{ width: "20%" }}>
+              <S.Input
+                onChange={(e) => handleEmailChange(e, 0)}
+                value={form.userEmail.split("@")[0] || ""}
+              />
+            </S.InputBox>
+
+            <span style={{ margin: "0 -35px 0 10px" }}>@</span>
+            <S.InputBox style={{ width: "20%" }}>
+              <S.Input
+                onChange={(e) => handleEmailChange(e, 1)}
+                value={form.userEmail.split("@")[1] || ""}
+              />
+            </S.InputBox>
+            <S.CheckButton onClick={onConfirmEmail}>인증요청</S.CheckButton>
+          </S.InputForm>
+          <S.InputForm>
+            <S.Label>
+              이메일 확인<S.Required>*</S.Required>
+            </S.Label>
+            <S.InputBox style={{ width: "20%" }}>
+              <S.Input
+                onChange={(e) => setForm({ ...verify, email: e.target.value })}
+                value={verify.email}
+              />
+            </S.InputBox>
+            <S.CheckButton onClick={onConfirmEmail}>인증확인</S.CheckButton>
+          </S.InputForm>
+          <S.InputForm style={{ borderBottom: "1px solid #aaaaaa" }}>
+            <S.Label>
+              휴대전화번호<S.Required>*</S.Required>
+            </S.Label>
+            <S.InputBox style={{ width: "10%" }}>
+              <S.Input
+                style={{ width: "80%" }}
+                onChange={(e) => handlePhoneNumberChange(e, 0)}
+                value={form.userPhoneNumber.split("-")[0] || ""}
+              />
+            </S.InputBox>
+
+            <span style={{ margin: "0 -35px 0 10px" }}>-</span>
+            <S.InputBox style={{ width: "10%" }}>
+              <S.Input
+                style={{ width: "80%" }}
+                onChange={(e) => handlePhoneNumberChange(e, 1)}
+                value={form.userPhoneNumber.split("-")[1] || ""}
+              />
+            </S.InputBox>
+            <span style={{ margin: "0 -35px 0 10px" }}>-</span>
+            <S.InputBox style={{ width: "10%" }}>
+              <S.Input
+                style={{ width: "80%" }}
+                onChange={(e) => handlePhoneNumberChange(e, 2)}
+                value={form.userPhoneNumber.split("-")[2] || ""}
               />
             </S.InputBox>
           </S.InputForm>
         </S.JoinForm>
-      </section>
+      </S.JoinContainer>
       <S.Button>가입하기</S.Button>
       <S.LineContainer>
         <S.Line style={{ width: "200px" }}></S.Line>
@@ -111,8 +209,8 @@ export function Join() {
         <S.Line style={{ width: "200px" }}></S.Line>
       </S.LineContainer>
       <S.SocialContainer>
-        <div>Google</div>
-        <div>Kakao</div>
+        <Google />
+        <Kakao />
       </S.SocialContainer>
     </Layout>
   );
