@@ -24,7 +24,7 @@ export const InfoContainer = styled.div`
 `;
 
 export const JoinContainer = styled.div`
-display: flex;
+  display: flex;
   width: 80%;
 `;
 
@@ -57,7 +57,8 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 15px;
-  margin: 10px;
+  margin-left: 10px;
+  height: 40px;
 `;
 export const Label = styled.label`
   width: 10%;
@@ -98,10 +99,18 @@ export const LineContainer = styled.div`
 
 export const Line = styled.div`
   border: 1px solid #eef0f3;
-  width: 100%
+  width: 100%;
 `;
 
 export const SocialContainer = styled.div`
   ${sharedContainerStyles}
   flex-direction: row;
+`;
+
+export const Error = styled.span`
+  display: flex;
+  align-self: flex-end;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 7px;
 `;
