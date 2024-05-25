@@ -62,7 +62,7 @@ export function Join() {
 
   const handleConfirmedPasswordChange = (e) => {
     const confirmedPassword = e.target.value;
-    setVerify({ ...verify, password: confirmedPassword });
+    setVerify({ ...verify, confirmedPassword });
     if (!validatePassword(confirmedPassword)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
