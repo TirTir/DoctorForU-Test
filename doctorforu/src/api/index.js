@@ -1,2 +1,2 @@
 export * from "./hospital";
-export * from "./auth";
+export * from "./join";

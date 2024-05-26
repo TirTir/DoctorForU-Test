@@ -7,6 +7,7 @@ import {
   postVerificationEmail,
 } from "../../../api";
 import * as S from "./Join.styled";
+import { useNavigate } from "react-router-dom";
 
 export function Join() {
   const [form, setForm] = useState({
@@ -62,16 +63,24 @@ export function Join() {
 
   const handleConfirmedPasswordChange = (e) => {
     const confirmedPassword = e.target.value;
-    setVerify({ ...verify, confirmedPassword });
+    setVerify({ ...verify, password: confirmedPassword });
     if (!validatePassword(confirmedPassword)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         password: "비밀번호가 일치하지 않습니다.",
       }));
+      setConfirm((prevErrors) => ({
+        ...prevErrors,
+        password: false,
+      }));
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
         password: "",
+      }));
+      setConfirm((prevErrors) => ({
+        ...prevErrors,
+        password: true,
       }));
     }
   };
@@ -100,16 +109,28 @@ export function Join() {
     });
   };
 
+  const navigate = useNavigate();
   const onSubmit = async () => {
-    alert("여기까지 완료");
+    //회원가입 요청
+    const data = { ...form };
+    const res = await postCheckDuplicateId(form.userId);
+    if (res) {
+      alert("회원가입이 완료되었습니다.");
+      navigate("/auth/login");
+    } else alert("잘못된 요청입니다.");
   };
 
   const handleCheckDuplicateId = async () => {
     //아이디 중복 체크 요쳥
     const res = await postCheckDuplicateId(form.userId);
-    if (res) alert("사용 가능한 아이디입니다.");
-    else alert("사용중인 아이디입니다.");
-    setConfirm.id(res);
+    console.log(res);
+    if (res) {
+      alert("사용 가능한 아이디입니다.");
+    } else alert("사용중인 아이디입니다.");
+    setConfirm({
+      ...confirm,
+      id: res,
+    });
   };
 
   const handleVerificationEmail = async () => {
@@ -125,13 +146,16 @@ export function Join() {
   const handleVerificationCode = async () => {
     //이메일 인증 확인
     const data = {
-      email: verify.email,
+      code: verify.email,
     };
     const res = await postVerificationCode(data);
+    console.log(data);
     if (res) alert("인증 완료되었습니다.");
     else alert("잘못된 인증 코드 입니다.");
-
-    setConfirm.email(res);
+    setConfirm({
+      ...confirm,
+      email: res,
+    });
   };
 
   return (
@@ -178,7 +202,7 @@ export function Join() {
             </S.InputBox>
             <S.CheckButton
               onClick={handleCheckDuplicateId}
-              disabled={errors.userId}
+              disabled={confirm.id}
               style={{ opacity: errors.userId ? 0.5 : 1 }}
             >
               중복체크
@@ -208,13 +232,7 @@ export function Join() {
             <S.InputBox>
               <S.Input
                 type="password"
-                onChange={() => {
-                  handleConfirmedPasswordChange();
-                  setConfirm((prevConfirm) => ({
-                    ...prevConfirm,
-                    password: !errors.password,
-                  }));
-                }}
+                onChange={handleConfirmedPasswordChange}
                 value={verify.password}
               />
             </S.InputBox>
@@ -310,7 +328,7 @@ export function Join() {
             onSubmit();
           }
         }}
-        disabled={errors.userId}
+        disabled={!(confirm.id && confirm.password && confirm.email)}
         style={{ opacity: errors.userId ? 0.5 : 1 }}
       >
         가입하기
